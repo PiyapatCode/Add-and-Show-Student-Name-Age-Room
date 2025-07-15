@@ -121,7 +121,7 @@ namespace Studentpro{
                             {
                                 Console.WriteLine("===!!!No Student in here!!!===");
                             }
-                            else if (studentM101.Count > 0)
+                            else if (studentM102.Count > 0)
                             {
                                 for (int r1 = 0; r1 < studentM102.Count; r1++)
                                 {
@@ -135,7 +135,7 @@ namespace Studentpro{
                             {
                                 Console.WriteLine("===!!!No Student in here!!!===");
                             }
-                            else if (studentM101.Count > 0)
+                            else if (studentM103.Count > 0)
                             {
                                 for (int r1 = 0; r1 < studentM103.Count; r1++)
                                 {
@@ -193,7 +193,7 @@ namespace Studentpro{
                         selectstudentedit = Convert.ToInt32(Console.ReadLine());
                         if (selectstudentedit <= studentM102.Count)
                         {
-                            Console.WriteLine($"----------Edit {studentM101[selectstudentedit - 1].Name}---------- ");
+                            Console.WriteLine($"----------Edit {studentM102[selectstudentedit - 1].Name}---------- ");
                             Console.Write("Edit Name : ");
                             studentM102[selectstudentedit - 1].Name = Console.ReadLine();
                             Console.Write("Edit Age  : ");
@@ -248,34 +248,56 @@ namespace Studentpro{
                             }
                             Console.Write("Choose student to delete : ");
                             int deleteindex = Convert.ToInt32(Console.ReadLine()) - 1;
-                            studentM101.RemoveAt(deleteindex);
-                            StorageM -= 1;
-                            Console.WriteLine("Delete Success!!");
+                            if (deleteindex >= 0 && deleteindex <= studentM101.Count)
+                            {
+                                studentM101.RemoveAt(deleteindex);
+                                StorageM -= 1;
+                                Console.WriteLine("Delete Success!!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Delete fail!!");
+                            }
+                           
                         }
                         else if (Deletestudent == "M102" || Deletestudent == "2" && studentM102.Count > 0)
                         {
-                            for (int i = 0; i < studentM101.Count; i++)
+                            for (int i = 0; i < studentM102.Count; i++)
                             {
-                                Console.WriteLine(i + 1 + ". " + studentM102[i].Name + "                    " + studentM101[i].Age);
+                                Console.WriteLine(i + 1 + ". " + studentM102[i].Name + "                    " + studentM102[i].Age);
                             }
                             Console.Write("Choose student to delete : ");
                             int deleteindex = Convert.ToInt32(Console.ReadLine()) - 1;
-                            studentM102.RemoveAt(deleteindex);
-                            StorageM -= 1;
-                            Console.WriteLine("Delete Success!!");
+                            if (deleteindex >= 0 && deleteindex <= studentM102.Count)
+                            {
+                                studentM102.RemoveAt(deleteindex);
+                                StorageM -= 1;
+                                Console.WriteLine("Delete Success!!");
+                            }
+                            else {
+                                Console.WriteLine("Delete fail!!");
+                            }
                         }
 
                         else if (Deletestudent == "M103" || Deletestudent == "3" && studentM103.Count > 0)
                         {
-                            for (int i = 0; i < studentM101.Count; i++)
+                            for (int i = 0; i < studentM103.Count; i++)
                             {
-                                Console.WriteLine(i + 1 + ". " + studentM103[i].Name + "                    " + studentM101[i].Age);
+                                Console.WriteLine(i + 1 + ". " + studentM103[i].Name + "                    " + studentM103[i].Age);
                             }
                             Console.Write("Choose student to delete : ");
                             int deleteindex = Convert.ToInt32(Console.ReadLine()) - 1;
-                            studentM103.RemoveAt(deleteindex);
-                            StorageM -= 1;
-                            Console.WriteLine("Delete Success!!");
+
+                            if (deleteindex >= 0 && deleteindex <= studentM103.Count)
+                            {
+                                studentM103.RemoveAt(deleteindex);
+                                StorageM -= 1;
+                                Console.WriteLine("Delete Success!!");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Delete fail!!");
+                            }
                         }
                         else {
                             Console.WriteLine("----------Error----------");
