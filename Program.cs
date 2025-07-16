@@ -2,25 +2,101 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
-namespace Studentpro{
-    class Mainprogram {
-        static void Main(string[] args) {
+using System.IO;
+using System.Net;
+namespace Studentpro
+{
+    class Mainprogram
+    {
+        
+        
+        static void Main(string[] args)
+        {
             //
             int Choosemenulist;
             string Editstudent = "";
             int StorageM = 0;
             string Deletestudent = "";
             //
-            List<string> menuclass = new List<string> {". M101",". M102",". M103" };
-            List<string> menulist = new List<string> {". Add Student",". Show All Student",". Edit Student",". Delete Student",". Exit" };
+            List<string> menuclass = new List<string> { ". M101", ". M102", ". M103" };
+            List<string> menulist = new List<string> { ". Add Student", ". Show All Student", ". Edit Student", ". Delete Student", ". Exit" };
             List<StorageStudentInfo> studentM101 = new List<StorageStudentInfo> { };
             List<StorageStudentInfo> studentM102 = new List<StorageStudentInfo> { };
             List<StorageStudentInfo> studentM103 = new List<StorageStudentInfo> { };
+         
             
-            string Back = "";
+            
+                List<string> save101student = new List<string>();
+            List<string> save102student = new List<string>();
+            List<string> save103student = new List<string>();
+            //
+            
+            
+            
+            if (File.Exists("save101student.txt"))
+            {
+                string[] countsave101 = File.ReadAllLines("save101student.txt");
+                foreach (var x in countsave101)
+                {
+                    string[] line = x.Split('|');
+                    if (line.Length != 3) { continue; }
+                    string name = line[0];
+                    string age = line[1];
+                    string room = line[2];
+                    StorageStudentInfo objsave = new StorageStudentInfo { Name = name, Age = age, Room = room };
+                    if (room == "M101" || room == "1")
+                    {
+
+                        save101student.Add(objsave.Room);
+                        save101student.Add(objsave.Name);
+                        save101student.Add(objsave.Age);
+                    }
+                }
+            }
+            else if (File.Exists("save102student.txt"))
+            {
+                string[] countsave102 = File.ReadAllLines("save102student.txt");
+                foreach (var i in countsave102)
+                {
+                    string[] line102 = i.Split('|');
+                    if (line102.Length != 3) { continue; }
+                    string name102 = line102[0];
+                    string age102 = line102[1];
+                    string room102 = line102[2];
+                    StorageStudentInfo objsave102 = new StorageStudentInfo { Name = name102, Age = age102, Room = room102 };
+                    if (room102 == "M102" || room102 == "2")
+                    {
+                        save102student.Add(objsave102.Room);
+                        save102student.Add(objsave102.Name);
+                        save102student.Add(objsave102.Age);
+                    }
+                }
+            }
+            else if (File.Exists("save103student.txt"))
+            {
+                string[] countsave103 = File.ReadAllLines("save103student.txt");
+                foreach (var o in countsave103)
+                {
+                    string[] line103 = o.Split('|');
+                    if (line103.Length != 3) { continue; }
+                    string name103 = line103[0];
+                    string age103 = line103[1];
+                    string room103 = line103[2];
+                    StorageStudentInfo objsave103 = new StorageStudentInfo { Name = name103, Age = age103, Room = room103 };
+                    if (room103 == "M103" || room103 == "3")
+                    {
+                        save103student.Add(objsave103.Room);
+                        save103student.Add(objsave103.Name);
+                        save103student.Add(objsave103.Age);
+                    }
+                }
+            }
+           
+                //
+                string Back = "";
             do
             {
-               int selectstudentedit;
+                int selectstudentedit;
                 Console.WriteLine("----------StudentInfo----------");
                 for (int x = 0; x < menulist.Count; x++)
                 {
@@ -41,7 +117,7 @@ namespace Studentpro{
                         Console.Write("Enter his/her Name : ");
                         S.Name = Console.ReadLine();
                         Console.Write("Enter his/her Age : ");
-                        S.Age = Convert.ToInt32(Console.ReadLine());
+                        S.Age = Console.ReadLine();
 
                         for (int i = 0; i < menuclass.Count; i++)
                         {
@@ -52,16 +128,23 @@ namespace Studentpro{
                         if (S.Room == "M101" || S.Room == "1")
                         {
                             studentM101.Add(S);
+                          
+                                save101student.Add($"{S.Name}|{S.Age}|M101");
+                            File.WriteAllLines("student101.text", save101student);
                             StorageM += 1;
                         }
                         else if (S.Room == "M102" || S.Room == "2")
                         {
                             studentM102.Add(S);
+                            save102student.Add($"{S.Name}|{S.Age}|M102");
+                            File.WriteAllLines("student102.text", save102student);
                             StorageM += 1;
                         }
                         else if (S.Room == "M103" || S.Room == "3")
                         {
                             studentM103.Add(S);
+                            save103student.Add($"{S.Name}|{S.Age}|M103");
+                            File.WriteAllLines("student103.text", save103student);
                             StorageM += 1;
                         }
                         else
@@ -75,6 +158,9 @@ namespace Studentpro{
                         }
                         else if (Err == false)
                         {
+                           
+                            
+                           
                             Console.WriteLine("Success!!");
                             Console.WriteLine("Add more ? (y/n)");
                         }
@@ -174,8 +260,12 @@ namespace Studentpro{
                             Console.WriteLine($"----------Edit {studentM101[selectstudentedit - 1].Name}---------- ");
                             Console.Write("Edit Name : ");
                             studentM101[selectstudentedit - 1].Name = Console.ReadLine();
+                         
                             Console.Write("Edit Age  : ");
-                            studentM101[selectstudentedit - 1].Age = Convert.ToInt32(Console.ReadLine());
+                            studentM101[selectstudentedit - 1].Age = Console.ReadLine();
+                            
+                                File.WriteAllLines("save101student",save101student);
+                            
                             Console.WriteLine("Edit Success!");
                         }
                         else
@@ -197,7 +287,10 @@ namespace Studentpro{
                             Console.Write("Edit Name : ");
                             studentM102[selectstudentedit - 1].Name = Console.ReadLine();
                             Console.Write("Edit Age  : ");
-                            studentM102[selectstudentedit - 1].Age = Convert.ToInt32(Console.ReadLine());
+                            studentM102[selectstudentedit - 1].Age = Console.ReadLine();
+                           
+                                File.WriteAllLines("save102student", save102student);
+                            
                             Console.WriteLine("Edit Success!");
                         }
                         else
@@ -220,7 +313,10 @@ namespace Studentpro{
                             Console.Write("Edit Name : ");
                             studentM103[selectstudentedit - 1].Name = Console.ReadLine();
                             Console.Write("Edit Age  : ");
-                            studentM103[selectstudentedit - 1].Age = Convert.ToInt32(Console.ReadLine());
+                            studentM103[selectstudentedit - 1].Age = Console.ReadLine();
+                            
+                                File.WriteAllLines("save103student", save103student);
+                            
                             Console.WriteLine("Edit Success!");
                         }
                         else
@@ -229,18 +325,20 @@ namespace Studentpro{
                         }
                         //
                     }
-
                 }
                 //4
-                else if (Choosemenulist == 4) {
-                    if (StorageM >= 1) {
+                else if (Choosemenulist == 4)
+                {
+                    if (StorageM >= 1)
+                    {
                         Console.WriteLine("----------Delete Student----------");
-                        for (int x = 0; x < menuclass.Count; x++) {
+                        for (int x = 0; x < menuclass.Count; x++)
+                        {
                             Console.WriteLine(x + 1 + menuclass[x]);
                         }
                         Console.Write("Choose Room : ");
                         Deletestudent = Console.ReadLine();
-                        if (Deletestudent == "M101" || Deletestudent == "1" && studentM101.Count>0)
+                        if (Deletestudent == "M101" || Deletestudent == "1" && studentM101.Count > 0)
                         {
                             for (int i = 0; i < studentM101.Count; i++)
                             {
@@ -252,13 +350,17 @@ namespace Studentpro{
                             {
                                 studentM101.RemoveAt(deleteindex);
                                 StorageM -= 1;
+                                foreach (var x in studentM101)
+                                {
+                                    File.WriteAllLines("save101student", save101student);
+                                }
                                 Console.WriteLine("Delete Success!!");
                             }
                             else
                             {
                                 Console.WriteLine("Delete fail!!");
                             }
-                           
+
                         }
                         else if (Deletestudent == "M102" || Deletestudent == "2" && studentM102.Count > 0)
                         {
@@ -272,13 +374,17 @@ namespace Studentpro{
                             {
                                 studentM102.RemoveAt(deleteindex);
                                 StorageM -= 1;
+                                foreach (var x in studentM102)
+                                {
+                                    File.WriteAllLines("save102student", save102student);
+                                }
                                 Console.WriteLine("Delete Success!!");
                             }
-                            else {
+                            else
+                            {
                                 Console.WriteLine("Delete fail!!");
                             }
                         }
-
                         else if (Deletestudent == "M103" || Deletestudent == "3" && studentM103.Count > 0)
                         {
                             for (int i = 0; i < studentM103.Count; i++)
@@ -292,6 +398,10 @@ namespace Studentpro{
                             {
                                 studentM103.RemoveAt(deleteindex);
                                 StorageM -= 1;
+                                foreach (var x in studentM103)
+                                {
+                                    File.WriteAllLines("save103student", save103student);
+                                }
                                 Console.WriteLine("Delete Success!!");
                             }
                             else
@@ -299,26 +409,29 @@ namespace Studentpro{
                                 Console.WriteLine("Delete fail!!");
                             }
                         }
-                        else {
+                        else
+                        {
                             Console.WriteLine("----------Error----------");
                         }
                     }
-                    else if (StorageM < 1) {
+                    else if (StorageM < 1)
+                    {
                         Console.WriteLine("No student to delete!!");
                     }
-
+                }
+                else if (Choosemenulist == 5)
+                {
+                    return;
                 }
                 else
                 {
                     Console.WriteLine("----------Error----------");
                 }
-                    Console.WriteLine("Do you want Back ? (y/n)");
+                Console.WriteLine("Do you want Back ? (y/n)");
                 Back = Console.ReadLine();
+                
             } while (Back.ToUpper() == "Y");
-            if (Choosemenulist == 5)
-            {
-                Console.WriteLine("----------End----------");
-            }
+            
             Console.WriteLine("----------End----------");
         }
     }
